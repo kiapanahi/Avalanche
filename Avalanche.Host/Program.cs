@@ -1,12 +1,26 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using GenericHost = Microsoft.Extensions.Hosting.Host;
 
 namespace Avalanche.Host
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var host = BuildHost();
+
+            host.Run();
+        }
+
+        private static IHost BuildHost()
+        {
+            return GenericHost.CreateDefaultBuilder()
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<SenderHostedService>();
+                })
+                .Build();
         }
     }
 }
