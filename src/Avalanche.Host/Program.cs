@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Avalanche.Host.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GenericHost = Microsoft.Extensions.Hosting.Host;
 
@@ -18,6 +21,13 @@ namespace Avalanche.Host
             return GenericHost.CreateDefaultBuilder()
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddDbContext<AvalancheDbContext>(options =>
+                                options
+                                .EnableSensitiveDataLogging()
+                                .EnableDetailedErrors()
+                                .UseSqlServer(hostContext.Configuration.GetConnectionString("Avalanche")));
+
+
                     services.AddHostedService<SenderHostedService>();
                 })
                 .Build();
