@@ -38,6 +38,8 @@ namespace Avalanche.Host.Data
                 b.Property(a => a.Text).HasColumnType("nvarchar(512)").IsRequired();
                 b.Property(a => a.SentDate).HasColumnType("datetime").IsRequired();
                 b.Property(a => a.BrokerResponse).HasColumnType("nvarchar(1024)").IsRequired();
+
+                b.HasIndex(a => a.Msisdn).HasName("IX_Msisdn");
             });
         }
     }
