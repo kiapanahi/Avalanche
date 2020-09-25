@@ -19,7 +19,8 @@ namespace Avalanche.Host
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("working...");
-                await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(1), CancellationToken.None)
+                    .ConfigureAwait(false);
             }
         }
     }
